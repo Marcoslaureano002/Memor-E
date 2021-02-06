@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "209775685009",
+    "project_id": "memor-e-15fcb",
+    "storage_bucket": "memor-e-15fcb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:209775685009:android:4c5ce1a3c2ba16ce8ffe30",
+        "android_client_info": {
+          "package_name": "com.memor_e.flutter_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "209775685009-fngt66kvpgafhq2qv55nu5n235kum1sa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACkApFqzp3pekkirXxnSlwkcZZ0jj2LIQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "209775685009-fngt66kvpgafhq2qv55nu5n235kum1sa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
