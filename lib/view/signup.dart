@@ -1,32 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/helper/helperfunction.dart';
 import 'package:flutter_app/services/auth.dart';
+import 'package:flutter_app/services/database.dart';
+import 'package:flutter_app/view/chatroomscreen.dart';
 import 'package:flutter_app/widgets/widget.dart';
 
 
 class SignUp extends StatefulWidget {
+  final Function toggle;
+  SignUp(this.toggle);
+
   @override
   _SignUpState createState() => _SignUpState();
 }
 
 class _SignUpState extends State<SignUp> {
-
-  bool isLoading = false;
-
-  AuthMethods authMethods = new AuthMethods();
-
-  final formKey = GlobalKey<FormState>();
   TextEditingController userNameTextEditingController = new TextEditingController();
   TextEditingController emailTextEditingController = new TextEditingController();
   TextEditingController passwordTextEditingController = new TextEditingController();
 
-  signMeUp() {
+  AuthMethods authMethods = new AuthMethods();
+  DatabaseMethods databaseMethods = new DatabaseMethods();
+
+  final formKey = GlobalKey<FormState>();
+  bool isLoading = false;
+
+
+  signMeUp() async {
+
     if (formKey.currentState.validate()) {
       setState(() {
+
         isLoading = true;
       });
 
-      authMethods.signUpWithEmailAndPassword(emailTextEditingController.text, passwordTextEditingController.text).then((val){
-        print("$val");
+      await authMethods.signUpWithEmailAndPassword(emailTextEditingController.text,
+          passwordTextEditingController.text).then((result){
+        if(result != null){
+
+          Map<String, String> userInfoMap = {
+            "name" : userNameTextEditingController.text,
+            "email" : emailTextEditingController.text,
+          };
+
+          databaseMethods.addUserInfo(userInfoMap);
+
+      HelperFunctions.saveUserLoggedInSharedPreference(true);
+      HelperFunctions.saveUserEmailSharedPreference(emailTextEditingController.text);
+      HelperFunctions.saveUserEmailSharedPreference(userNameTextEditingController.text);
+
+      Navigator.pushReplacement(context, MaterialPageRoute(
+              builder: (context) => ChatRoom()
+          ));
+        }
       });
     }
   }
@@ -49,7 +75,6 @@ class _SignUpState extends State<SignUp> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-
                     Form(
                       key: formKey,
                       child: Column(
@@ -141,22 +166,27 @@ class _SignUpState extends State<SignUp> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Already have an account?", style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 17,
-                            decoration: TextDecoration.underline
-                        ),)
+                        GestureDetector(
+                          onTap: (){
+                            widget.toggle();
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 8),
+                            child: Text("Already have an account?", style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 17,
+                                decoration: TextDecoration.underline
+                            ),),
+                          ),
+                        )
                       ],
                     ),
-
                     SizedBox(height: 100,),
-
                   ],
                 )
             ),
           ),
         )
-
     );
   }
 }

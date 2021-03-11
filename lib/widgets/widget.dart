@@ -20,6 +20,12 @@ TextStyle mediumTextFieldStyle() {
   );
 }
 
+TextStyle whiteTextFieldStyle() {
+  return TextStyle(
+      color: Colors.white,
+      fontSize: 17
+  );
+}
 InputDecoration textFieldInputDecoration(String hintText){
   return InputDecoration(
       hintText: hintText ,
